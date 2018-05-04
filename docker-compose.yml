@@ -1,0 +1,17 @@
+---
+version: '3.3'
+services:
+  web:
+    build: .
+    ports:
+      - 8000:8000
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/walkie
+      - NODE_ENV=production
+      - APP_HOST=http://localhost:8000
+    depends_on:
+      - mongodb
+  mongodb:
+    image: mongo:3.2
+    ports:
+      - 27017:27017

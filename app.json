@@ -1,0 +1,50 @@
+{
+  "name": "Walkiebot",
+  "description": "Walkiebot lets you prototype slack chatbots and messages",
+  "repository": "https://github.com/FoundersAS/walkiebot",
+  "keywords": ["node", "react", "hapijs", "slack", "prototyping", "chatbot"],
+  "scripts": {
+  },
+  "env": {
+    "HEROKU_APP_NAME": {
+      "required": true,
+      "description": "The same value as what you put for 'App name' above"
+    },
+    "NODE_ENV": {
+      "required": true,
+      "value": "production"
+    },
+    "NPM_CONFIG_PRODUCTION": {
+      "required": true,
+      "value": "false"
+    },
+    "JWT_PUBLIC": {
+      "required": false
+    },
+    "JWT_SECRET": {
+      "required": false
+    },
+    "SLACK_CLIENT_ID": {
+      "required": false
+    },
+    "SLACK_CLIENT_SECRET": {
+      "required": false
+    },
+    "SLACK_LOGIN_REDIRECT_URL": {
+      "required": false
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+    "mongolab"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
