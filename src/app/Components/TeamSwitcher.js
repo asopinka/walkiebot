@@ -348,26 +348,6 @@ class TeamSwitcher extends React.Component {
               <div className='team-switcher__item-icon icon-help' />
               <div className='team-switcher__item-name'>help</div>
             </div>
-            <div
-              className='team-switcher__item'
-              onClick={e => {
-                e.preventDefault();
-
-                try {
-                  if (window.driftSidebarOpen) {
-                    window.driftApi.sidebar.close();
-                  } else {
-                    window.driftApi.sidebar.open();
-                  }
-                } catch (e) {
-                  window.alert('It looks like something went wrong, do you have an adblocker active?');
-                  throw e;
-                }
-              }}
-              >
-              <div className='team-switcher__item-icon icon-speech-bubble' />
-              <div className='team-switcher__item-name'>Chat</div>
-            </div>
           </div>
         </div>
       </div>

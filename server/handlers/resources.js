@@ -6,9 +6,10 @@ let assets = {
 };
 
 try {
-  const file = fs.readFileSync('../assets.json');
+  const file = fs.readFileSync(__dirname + '/../assets.json');
   if (file) assets = JSON.parse(file.toString());
 } catch (e) {
+  console.error(e);
   console.error('Could not find server/assets.json, you may get an error loading Walkie');
 }
 
