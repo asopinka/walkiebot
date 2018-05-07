@@ -143,23 +143,13 @@ export const loadLocalBots = () => {
     return new Promise((resolve, reject) => {
       dispatch(startLoading());
       try {
-        const localBotId = window.localStorage.getItem('localBotId');
+        // force to obie bot
+        const localBotId = '4088fe2c0509-163381e3b0d';
+        window.localStorage.setItem('localBotId', localBotId);
+        window.localStorage.setItem('lastUsedBot', '0-3ya1q');
+
+        //const localBotId = window.localStorage.getItem('localBotId');
         if (!localBotId) {
-          localBotId = '4088fe2c0509-163381e3b0d';
-          window.localStorage.setItem('localBotId', localBotId);
-
-          dispatch(initSystemNotificationsForUser(localBotId));
-          api.getLocalBots(localBotId)
-            .then(res => {
-              if (!res.data.ok) return reject(res.data);
-
-              dispatch(localBots._initLocalBots(res.data.data));
-              dispatch(stopLoading());
-              return resolve(res.data);
-            }).catch(error => {
-              dispatch(stopLoading());
-              reject(error);
-            });
           // const data = window.localStorage.getItem('walkiebot.co');
           // const bots = JSON.parse(data) || [];
           // const newId = generateLocalId();
