@@ -145,22 +145,11 @@ export const loadLocalBots = () => {
       try {
         const localBotId = window.localStorage.getItem('localBotId');
         if (!localBotId) {
-          const data = window.localStorage.getItem('walkiebot.co');
-          const bots = JSON.parse(data) || [];
-          const newId = generateLocalId();
+          localBotId = '4088fe2c0509-163381e3b0d';
+          window.localStorage.setItem('localBotId', localBotId);
 
-          window.localStorage.setItem('localBotId', newId);
-
-          if (!bots.length) {
-            console.log('[WALKIE] no local bots to migrate');
-            dispatch(localBots._initLocalBots({ id: newId, bots: [] }));
-            dispatch(stopLoading());
-            return resolve();
-          }
-          console.log('[WALKIE] migrating local bots to server');
-
-          dispatch(initSystemNotificationsForUser(newId));
-          api.putLocalBots(newId, bots)
+          dispatch(initSystemNotificationsForUser(localBotId));
+          api.getLocalBots(localBotId)
             .then(res => {
               if (!res.data.ok) return reject(res.data);
 
@@ -171,6 +160,32 @@ export const loadLocalBots = () => {
               dispatch(stopLoading());
               reject(error);
             });
+          // const data = window.localStorage.getItem('walkiebot.co');
+          // const bots = JSON.parse(data) || [];
+          // const newId = generateLocalId();
+
+          // window.localStorage.setItem('localBotId', newId);
+
+          // if (!bots.length) {
+          //   console.log('[WALKIE] no local bots to migrate');
+          //   dispatch(localBots._initLocalBots({ id: newId, bots: [] }));
+          //   dispatch(stopLoading());
+          //   return resolve();
+          // }
+          // console.log('[WALKIE] migrating local bots to server');
+
+          // dispatch(initSystemNotificationsForUser(newId));
+          // api.putLocalBots(newId, bots)
+          //   .then(res => {
+          //     if (!res.data.ok) return reject(res.data);
+
+          //     dispatch(localBots._initLocalBots(res.data.data));
+          //     dispatch(stopLoading());
+          //     return resolve(res.data);
+          //   }).catch(error => {
+          //     dispatch(stopLoading());
+          //     reject(error);
+          //   });
         } else {
           dispatch(initSystemNotificationsForUser(localBotId));
           api.getLocalBots(localBotId)
