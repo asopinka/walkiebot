@@ -146,7 +146,7 @@ export const loadLocalBots = () => {
         // force to obie bot
         const localBotId = '4088fe2c0509-163381e3b0d';
         window.localStorage.setItem('localBotId', localBotId);
-        window.localStorage.setItem('lastUsedBot', '0-3ya1q');
+        window.localStorage.setItem('lastUsedBot', 'wx6o-4sle1');
 
         //const localBotId = window.localStorage.getItem('localBotId');
         if (!localBotId) {
