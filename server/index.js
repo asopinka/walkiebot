@@ -6,7 +6,9 @@ const Hapi = require('hapi');
 const server = new Hapi.Server();
 const accessControl = require('./modules/access-control');
 
-const JWT_PUBLIC = process.env.JWT_PUBLIC && process.env.JWT_PUBLIC.replace(/\\n/g, '\n');
+const configJWT_PUBLIC = process.env.JWT_PUBLIC
+const buff = new Buffer(configJWT_PUBLIC, 'base64')
+const JWT_PUBLIC = buff.toString('ascii')
 
 if (!JWT_PUBLIC) console.warn('WARNING: Missing JWT_PUBLIC environment variable - Not setting up authentication');
 

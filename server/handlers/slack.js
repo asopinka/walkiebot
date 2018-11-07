@@ -106,12 +106,15 @@ module.exports = {
             db.users.save(user.id, team.id, user, localBotId, (err, res) => {
               if (err) return error(reply, err);
 
+              const buff = new Buffer(JWT_SECRET, 'base64')
+              const localSecret = buff.toString('ascii')
+
               jwt.sign({
                 userId: user.id,
                 teamId: team.id,
                 teamDomain: team.domain
               },
-              JWT_SECRET,
+              localSecret,
               { algorithm: 'RS256', expiresIn: '30d', issuer: 'walkiebot' },
               (err, token) => {
                 if (err) return reply(Boom.badImplementation(err));
