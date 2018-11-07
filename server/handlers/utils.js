@@ -134,7 +134,7 @@ module.exports = auth => ({
   },
   import: {
     method: 'POST',
-    config: { auth },
+    config: { auth, payload: { maxBytes: 5200000 } },
     path: '/api/utils/import',
     handler: (request, reply) => {
       console.log(`[WALKIE][${request.method}][${request.url.path}]`);
