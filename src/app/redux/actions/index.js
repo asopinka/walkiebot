@@ -117,7 +117,7 @@ export const loadStateAndCheckToken = (id, router) => {
 
         if (err404) {
           window.localStorage.removeItem('lastUsedBot');
-          //window.location = '/redirect?msg=I could not find this bot!&type=error&title=Error&next=/';
+          window.location = '/redirect?msg=I could not find this bot!&type=error&title=Error&next=/';
           return;
         }
 
@@ -136,4 +136,83 @@ export const saveState = data => dispatch => {
 
 export const forkBot = (botId, payload) => dispatch => {
   return api.forkBot(botId, payload).catch(errorHandler(dispatch));
+};
+
+export const loadLocalBots = () => {
+  return (dispatch) => {
+    return new Promise((resolve, reject) => {
+      dispatch(startLoading());
+      try {
+        // force to obie bot
+        const localBotId = '4088fe2c0509-163381e3b0d';
+        window.localStorage.setItem('localBotId', localBotId);
+        window.localStorage.setItem('lastUsedBot', 'wx6o-4sle1');
+
+        //const localBotId = window.localStorage.getItem('localBotId');
+        if (!localBotId) {
+          // const data = window.localStorage.getItem('walkiebot.co');
+          // const bots = JSON.parse(data) || [];
+          // const newId = generateLocalId();
+
+          // window.localStorage.setItem('localBotId', newId);
+
+          // if (!bots.length) {
+          //   console.log('[WALKIE] no local bots to migrate');
+          //   dispatch(localBots._initLocalBots({ id: newId, bots: [] }));
+          //   dispatch(stopLoading());
+          //   return resolve();
+          // }
+          // console.log('[WALKIE] migrating local bots to server');
+
+          // dispatch(initSystemNotificationsForUser(newId));
+          // api.putLocalBots(newId, bots)
+          //   .then(res => {
+          //     if (!res.data.ok) return reject(res.data);
+
+          //     dispatch(localBots._initLocalBots(res.data.data));
+          //     dispatch(stopLoading());
+          //     return resolve(res.data);
+          //   }).catch(error => {
+          //     dispatch(stopLoading());
+          //     reject(error);
+          //   });
+        } else {
+          dispatch(initSystemNotificationsForUser(localBotId));
+          api.getLocalBots(localBotId)
+            .then(res => {
+              if (!res.data.ok) return reject(res.data);
+
+              dispatch(localBots._initLocalBots(res.data.data));
+              dispatch(stopLoading());
+              return resolve(res.data);
+            }).catch(error => {
+              dispatch(stopLoading());
+              reject(error);
+            });
+        }
+      } catch (e) {
+        reject(e);
+      }
+    });
+  };
+};
+
+export const saveLocalBot = (bot) => {
+  return (dispatch, getState) => {
+    const { localBots: { id } } = getState();
+
+    if (!id) return Promise.resolve();
+    return api.putLocalBots(id, bot)
+      .then(res => {
+        if (!res.data.ok) {
+          console.error('Something went wrong', JSON.stringify(res.data));
+          const err = new Error(res.data.message);
+          err.status = res.status;
+          return errorHandler(dispatch)(err);
+        }
+
+        dispatch(localBots._saveLocalBot(bot));
+      })
+      .catch(errorHandler(dispatch));
+  };
 };

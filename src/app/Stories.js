@@ -80,7 +80,7 @@ class Stories extends React.Component {
     this.toggleHeaderOptions = this.toggleHeaderOptions.bind(this);
 
     this.state = {
-      showAddBotModal: false,
+      showAddBotModal: true,
       showSettingsModal: false,
       canDeleteBot: false,
       showDeleteModal: false,
@@ -430,12 +430,12 @@ class Stories extends React.Component {
 
         <AvatarsLoader show={this.state.isForking} text={'Forking!'} overlay />
 
+        {isNewBot && addBotModal}
         {this.state.showSettingsModal && settingsModal}
         {this.state.showDeleteModal && deleteModal}
         {this.state.showForkModal && forkModal}
         {this.state.showShareModal && shareModal}
 
-        { meta.signedIn && (
         <div className='header header--overview'>
           <div className='bot-info__wrap'>
             <div className='bot-info'>
@@ -547,9 +547,7 @@ class Stories extends React.Component {
             </div>
           </div>
         </div>
-        )}
 
-        { meta.signedIn && (
         <div className='stories__tools'>
           <input
             autoFocus
@@ -575,9 +573,7 @@ class Stories extends React.Component {
             onClick={this.toggleListView}
             />
         </div>
-        )}
 
-        { meta.signedIn && (
         <div
           className={classNames('stories__list', {
             'stories__list--cards': this.state.storiesViewType === 'cards',
@@ -605,14 +601,6 @@ class Stories extends React.Component {
               .map(this.mapStories)
           }
         </div>
-        )}
-
-        { !meta.signedIn && (
-          <div style={{ height: "100%", width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <div style={{ backgroundImage: "url(/static/illustrations/obie.svg)", backgroundSize: "cover", width: "200px", height: "200px" }}>
-            </div>
-          </div>
-        )}
       </div>
     );
   }
