@@ -30,15 +30,13 @@ import {
 } from './redux/ducks/stories';
 import {
   loadStateAndCheckToken,
-  addLocalBot,
-  loadLocalBots,
   migrateBotToTeam
 } from './redux/actions';
 import { triggerNotification, dismissNotification } from './redux/ducks/notification';
 import { dismissSystemNotification } from './redux/ducks/system-notifications';
 import { getMe } from './redux/ducks/meta';
 
-require('../static/illustrations/obie.png');
+require('../static/illustrations/obie.svg');
 require('../static/illustrations/free-month.svg');
 require('../static/illustrations/not-signed-in.svg');
 require('../static/illustrations/no-local-bots.svg');
@@ -205,7 +203,6 @@ class App extends React.Component {
   }
 
   componentDidMount () {
-    this.props.dispatch(loadLocalBots());
     this.loadBot();
   }
 

@@ -93,22 +93,6 @@ class BotList extends React.Component {
               </a>
               <div className='type__tiny type--right'>No credit card required</div>
             </div>
-            <div className='team-switcher__column team-switcher__column--pricing'>
-
-              <div className='pricing__title'>Walkie Pro (Beta)</div>
-              <div className='pricing__meta'>With Walkie Pro we aim to make your workflow smarter, faster and more playful.</div>
-
-              <div className='pricing__options'>
-                <div className='pricing__options-item'>Share bots with your Slack team</div>
-                <div className='pricing__options-item pricing__options-item--sub'>- No more sending links to everyone.</div>
-                <div className='pricing__options-item'>Convert anonymous bots to team bots</div>
-                <div className='pricing__options-item pricing__options-item--sub'>- Already in deep with Walkie? You can still share it with your team.</div>
-                <div className='pricing__options-item'>Save your list of anonymous bots</div>
-                <div className='pricing__options-item pricing__options-item--sub'>- Deleted your browser cache? Now you can still see your anonymous bots.</div>
-                <div className='pricing__options-item'>Get notified of future updates</div>
-                <div className='pricing__options-item pricing__options-item--sub'>- Find out about new exciting Walkie features.</div>
-              </div>
-            </div>
           </div>
         )}
 
@@ -309,27 +293,6 @@ class TeamSwitcher extends React.Component {
                 </CSSTransitionGroup>
               </div>
             )}
-            <div
-              onClick={toggleUserList}
-              className={classNames('team-switcher__link', {
-                'team-switcher__link--active': isAnonContext && !!meta.botId,
-                'team-switcher__link--open': userListOpen
-              })}
-              >
-              <ContextAvatar
-                name='Anon'
-                url='/static/illustrations/local-bots.svg'
-                />
-              <CSSTransitionGroup
-                transitionName='open-bot-switcher-transition'
-                transitionEnterTimeout={300}
-                transitionLeaveTimeout={300}
-                >
-                {listOpen && userListOpen && (
-                  <BotList bots={bots} meta={meta} isAnonList={userListOpen} key={'annonList'} />
-                )}
-              </CSSTransitionGroup>
-            </div>
           </div>
           <div>
             {meta.botId && (
@@ -340,10 +303,12 @@ class TeamSwitcher extends React.Component {
                 </div>
               </div>
             )}
+            {meta.signedIn && (
             <div className='team-switcher__item' onClick={showImportOverlay}>
               <div className='team-switcher__item-icon icon-outbox' />
               <div className='team-switcher__item-name'>import from Walkie export</div>
             </div>
+            )}
             <div className='team-switcher__item' onClick={showHelpOverlay}>
               <div className='team-switcher__item-icon icon-help' />
               <div className='team-switcher__item-name'>help</div>
