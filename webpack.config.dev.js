@@ -30,7 +30,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './dev-index.ejs',
       SLACK_CLIENT_ID: JSON.stringify(process.env.SLACK_CLIENT_ID || ''),
-      SLACK_LOGIN_REDIRECT_URL: JSON.stringify(process.env.SLACK_LOGIN_REDIRECT_URL || '')
+      SLACK_LOGIN_REDIRECT_URL: JSON.stringify(process.env.SLACK_LOGIN_REDIRECT_URL || ''),
+      USERHASH: JSON.stringify(process.env.USERHASH || ''),
+      PASSHASH: JSON.stringify(process.env.PASSHASH || '')
     }),
     new webpack.NamedModulesPlugin()
   ],

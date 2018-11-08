@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import slug from 'slug';
+import sha256 from 'crypto-js/sha256';
 
 import Alert from './Components/Alert';
 import SystemAlert from './Components/SystemAlert';
@@ -76,8 +77,16 @@ class App extends React.Component {
     this.closeExportOverlayOnEscape = this.closeExportOverlayOnEscape.bind(this);
 
     this.exportData = this.exportData.bind(this);
+    this.closeLogin = this.closeLogin.bind(this);
+    this.usernameChanged = this.usernameChanged.bind(this);
+    this.passwordChanged = this.passwordChanged.bind(this);
+    this.handlePasswordKeyPress = this.handlePasswordKeyPress.bind(this);
+    this.login = this.login.bind(this);
 
     this.state = {
+      showLogin: true,
+      username: '',
+      password: '',
       showHelpOverlay: false,
       showImportOverlay: false,
       showExportOverlay: false,
@@ -88,6 +97,44 @@ class App extends React.Component {
       exportFileUrl: null,
       exportErrors: []
     };
+  }
+
+  closeLogin() {
+    this.setState({ showLogin: false });
+
+    this.props.dispatch(loadLocalBots());
+    this.loadBot();
+  }
+
+  handlePasswordKeyPress(e) {
+    if (e.keyCode == 13 || e.which == 13) {
+      e.preventDefault();
+      this.login();
+    }
+  }
+
+  usernameChanged(e) {
+    this.setState({
+      username: e.target.value
+    })
+  }
+
+  passwordChanged(e) {
+    this.setState({
+      password: e.target.value
+    })
+  }
+
+  login() {
+    const { username, password } = this.state;
+
+    const hashU = sha256(username) + "";
+    const hashP = sha256(password) + "";
+    if (hashU == window.HASHU &&
+        hashP == window.HASHP) {
+      window.localStorage.setItem('tasyttwalkie', `${window.HASHU}|${window.HASHP}`);
+      this.closeLogin();
+    }
   }
 
   showHelpOverlay () {
@@ -205,8 +252,16 @@ class App extends React.Component {
   }
 
   componentDidMount () {
-    this.props.dispatch(loadLocalBots());
-    this.loadBot();
+    const item = window.localStorage.getItem('tasyttwalkie');
+    if (item) {
+      const split = item.split('|');
+      if (split.length == 2) {
+        if (split[0] == window.HASHU &&
+            split[1] == window.HASHP) {
+          this.closeLogin();
+        }
+      }
+    }
   }
 
   deleteStoryHandler (story) {
@@ -306,6 +361,21 @@ class App extends React.Component {
 
   render () {
     const { children, meta, localBots, teamBots, notification, systemNotifications } = this.props;
+    const { showLogin } = this.state;
+
+    if (showLogin) {
+      return (
+        <div className='login'>
+          <div className="card">
+            <h1>Login</h1>
+            <input type="text" placeholder="Username" onChange={this.usernameChanged} value={this.state.username} />
+            <input type="password" placeholder="Password" onChange={this.passwordChanged} value={this.state.password} onKeyPress={this.handlePasswordKeyPress} />
+            <button onClick={this.login}>Login</button>
+          </div>
+        </div>
+      )
+    }
+
     return (
       <div className='app'>
         <Alert

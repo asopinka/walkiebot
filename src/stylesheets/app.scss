@@ -130,3 +130,45 @@
   opacity: 0.01;
   transition: opacity .3s $easing;
 }
+
+.login {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .card {
+    border: 1px solid $color-secondary-light;
+    border-radius: 3px;
+    padding: 2rem;
+    box-shadow: 0 20px 35px 0 rgba(0,0,0,0.1);
+  }
+
+  input {
+    display: block;
+    margin: 1rem 0 0 0;
+    border-radius: 3px;
+    border: 1px solid $color-secondary-light;
+    padding: 4px 8px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  button {
+    color: #fff;
+    background: $color-secondary-light;
+    margin: 1rem 0 0 0;
+    box-shadow: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+    padding: 8px 16px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}

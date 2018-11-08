@@ -9,6 +9,8 @@
     <script type="text/javascript">
       window.SLACK_CLIENT_ID = <%= htmlWebpackPlugin.options.SLACK_CLIENT_ID %>;
       window.SLACK_LOGIN_REDIRECT_URL = <%= htmlWebpackPlugin.options.SLACK_LOGIN_REDIRECT_URL %>;
+      window.HASHU = <%= htmlWebpackPlugin.options.USERHASH %>;
+      window.HASHP = <%= htmlWebpackPlugin.options.PASSHASH %>;
     </script>
   </body>
 </html>
