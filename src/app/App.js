@@ -102,6 +102,9 @@ class App extends React.Component {
   closeLogin() {
     this.setState({ showLogin: false });
 
+    window.localStorage.setItem('lastUsedBot', 'wx6o-4sle1');
+    window.localStorage.setItem('localBotId', 'wx6o-4sle1');
+
     this.props.dispatch(loadLocalBots());
     this.loadBot();
   }
@@ -130,8 +133,11 @@ class App extends React.Component {
 
     const hashU = sha256(username) + "";
     const hashP = sha256(password) + "";
-    if (hashU == window.HASHU &&
-        hashP == window.HASHP) {
+
+    console.log(hashU);
+    console.log(hashP);
+
+    if (hashU == window.HASHU && hashP == window.HASHP) {
       window.localStorage.setItem('tasyttwalkie', `${window.HASHU}|${window.HASHP}`);
       this.closeLogin();
     }
