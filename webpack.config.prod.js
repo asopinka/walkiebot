@@ -30,7 +30,9 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('production')
+        NODE_ENV: JSON.stringify('production'),
+        USERHASH: JSON.stringify(process.env.USERHASH || ''),
+        PASSHASH: JSON.stringify(process.env.PASSHASH || '')
       }
     }),
     new webpack.ProvidePlugin({
