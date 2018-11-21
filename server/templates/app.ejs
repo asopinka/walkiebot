@@ -31,6 +31,8 @@
       window.__INITIAL_STATE__ = <%- JSON.stringify(initialState) %>;
       window.SLACK_CLIENT_ID = <%- JSON.stringify(SLACK_CLIENT_ID) %>;
       window.SLACK_LOGIN_REDIRECT_URL = <%- JSON.stringify(SLACK_LOGIN_REDIRECT_URL) %>;
+      window.HASHU = <%= JSON.stringify(USERHASH) %>;
+      window.HASHP = <%= JSON.stringify(PASSHASH) %>;
     </script>
     <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>

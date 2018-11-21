@@ -65,7 +65,9 @@ module.exports = {
         initialState: {},
         assets: assets,
         SLACK_CLIENT_ID: process.env.SLACK_CLIENT_ID || '',
-        SLACK_LOGIN_REDIRECT_URL: SLACK_LOGIN_REDIRECT_URL || ''
+        SLACK_LOGIN_REDIRECT_URL: SLACK_LOGIN_REDIRECT_URL || '',
+        USERHASH: process.env.USERHASH,
+        PASSHASH: process.env.PASSHASH
       });
     }
   }
